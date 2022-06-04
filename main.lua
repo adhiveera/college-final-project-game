@@ -50,27 +50,32 @@ function setNextDestination( box, destination )
     local box_y = box_object.y
 
     -- Next junction point coordinates
-    local junction_x = destination_object.x
-    local junction_y = destination_object.y
+    local junction_x = destination_object[1]
+    local junction_y = destination_object[2]
 
     -- If it is one way then set destination to next
     if destination_type == "one-way" then
-        local index = destination.next[1]
-        local type = destination.next[2]
-        box.destination[1] = index
-        box.destination[2] = type
+        local type = destination.next[1]
+        local index = destination.next[2]
+        box.destination[1] = type
+        box.destination[2] = index
     end
 
     -- If it is two then set destination based on user in put
-   if destination_type == "two-way" then
-       local tmp = destination.next[destination.direction]
-       destination = tmp
-   end
+    if destination_type == "two-way" then
+        
+        local tmp = destination.next[destination.direction]
+        local index = tmp[1]
+        local type = tmp[2]
+        box.destination[1] = index
+        box.destination[2] = type
+    end
    -- Check if the box has reached an end point
    if destination_type == "end" then
-        print("sdf")
-       box_x = -110
-       box_y = -160
+       box.x = -110
+       box.y = -160
+       box.destination[1] = "o"
+       box.destination[2] = 1
        box.state = "OFF"
    end
 end

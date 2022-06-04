@@ -44,7 +44,6 @@ function M.checkMoveDirection( box )
 
     local dest = functions.decipherDestination(box.destination)
     local destination_object = dest.object
-    local destination_type = dest.type
     local box_object = box.object
     
     -- Box's coordinates 
@@ -52,8 +51,8 @@ function M.checkMoveDirection( box )
     local box_y = box_object.y
 
     -- Next junction point coordinates
-    local junction_x = destination_object.x
-    local junction_y = destination_object.y
+    local junction_x = destination_object[1]
+    local junction_y = destination_object[2]
 
     print(junction_x)
     print(box_x)
