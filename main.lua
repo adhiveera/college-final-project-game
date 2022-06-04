@@ -70,10 +70,11 @@ function setNextDestination( box, destination )
         box.destination[1] = index
         box.destination[2] = type
     end
+
    -- Check if the box has reached an end point
    if destination_type == "end" then
-       box.x = -110
-       box.y = -160
+       box.object.x = -110
+       box.object.y = -160
        box.destination[1] = "o"
        box.destination[2] = 1
        box.state = "OFF"
@@ -86,7 +87,6 @@ local function update()
     for i = 1, length do
         local box = all_boxes[i]
         local state = box.state
-        --local destination = whatever[box.destination]
         
         if state == "ON" then
             local direction = boxes.checkMoveDirection(box)

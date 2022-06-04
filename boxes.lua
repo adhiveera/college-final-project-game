@@ -3,7 +3,7 @@ local map = require('map')
 local M = {}
 
 -- Creation of inactive boxes
-M.green_a = {object = display.newRect(-110, -160, 20, 20), destination = {"o", 1}, state = "OFF"}
+M.green_a = {object = display.newRect(-110, -160, 20, 20), destination = {"o", 1}, state = "ON"}
 M.green_b = {object = display.newRect(-110, -160, 20, 20), destination = {"o", 1}, state = "OFF"}
 M.red_a = {object = display.newRect(-110, -160, 20, 20), destination = {"o", 1}, state = "OFF"}
 M.red_b = {object = display.newRect(-110, -160, 20, 20), destination = {"o", 1}, state = "OFF"}
@@ -36,7 +36,10 @@ function M.spawnBoxes()
     local object = box.object
     object.x = 110
     object.y = 160
-    box.state = "ON"
+
+    if box.state == "OFF" then
+        box.state = "ON"
+    end
 end
 
 -- Checking the direction of the box movement
@@ -54,33 +57,24 @@ function M.checkMoveDirection( box )
     local junction_x = destination_object[1]
     local junction_y = destination_object[2]
 
-    print(junction_x)
-    print(box_x)
-    print(junction_y)
-    print(box_y)
     -- Checking if a point has been reached
     if box_y == junction_y and box_x == junction_x then
-        print("pures")
         return "none"
     end
 
     -- Checking which direction to move the box horzontally.
     if box_y == junction_y then 
         if junction_x > box_x then
-            print("pure")
             return "right"
         else 
-            print("pur")
             return "left"
         end
     end
     -- Checking which direction to move the box vertically.
     if box_x == junction_x then 
         if junction_y > box_y then
-            print("pu")
             return "down"
         else 
-            print("p")
             return "up"
         end
     end

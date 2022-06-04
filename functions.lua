@@ -30,6 +30,17 @@ function MODULE.decipherDestination( decipher )
     end
 end
 
+function MODULE.indexOf( table, value )
+
+    -- Returns the index of the value in a table
+    for index, v in pairs(table) do
+        if v == value then
+            return index
+        end
+    end
+    return nil
+end
+
 -- Move boxes on the map
 function MODULE.moveBox( direction, box )
 
