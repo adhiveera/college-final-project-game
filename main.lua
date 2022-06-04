@@ -6,9 +6,7 @@ local map = require("map")
 
 -- Variables
 local _W, _H, _CX, _CY = relayout._W, relayout._H, relayout._CX, relayout._CY
-local all_boxes = boxes.all_boxes
-local whatever = map.all_one_way_junctions
-
+local start
 function moveBox( direction, box )
     
     if direction == "down" then
@@ -34,6 +32,7 @@ end
 
 function listener( event )
     boxes.spawnBoxes()
+    start = 1
     timer.cancelAll()
     timer.performWithDelay( 5000, listener )
 end
@@ -78,23 +77,36 @@ function setNextDestination( box, destination )
        box.destination[1] = "o"
        box.destination[2] = 1
        box.state = "OFF"
+
+       --table.insert(boxes.all_boxes_off, box)
+       --table.remove(boxes.all_boxes_on, functions.indexOf(boxes.all_boxes_on, box))
    end
 end
 
 local function update()    
 
-    local length = #all_boxes
-    for i = 1, length do
-        local box = all_boxes[i]
-        local state = box.state
-        
-        if state == "ON" then
-            local direction = boxes.checkMoveDirection(box)
-            if direction == "none" then
-                setNextDestination(box, functions.decipherDestination(box.destination))
+    
+    if start == 1 then
+        local all_boxes_on = {}
+        for key, value in pairs(boxes.all_boxes) do
+            if value.state == "ON" then
+                table.insert(all_boxes_on, value)
             end
-            moveBox(direction, box.object )
-        end    
+        end
+
+        local length = #all_boxes_on
+        for i = 1, length do
+            local box = all_boxes_on[i]
+            local state = box.state
+            
+            if state == "ON" then
+                local direction = boxes.checkMoveDirection(box)
+                if direction == "none" then
+                    setNextDestination(box, functions.decipherDestination(box.destination))
+                end
+                moveBox(direction, box.object )
+            end    
+        end
     end
 end
 
