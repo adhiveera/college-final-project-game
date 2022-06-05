@@ -43,11 +43,12 @@ end
 
 -- Junction pointer direction logic
 function MODULE.changeJunctionDirection( touchedObject )
-    local dir = touchedObject.direction
-    if dir == 1 then
-        dir = 2
+    print(counter)
+    
+    if touchedObject.direction == 1 then
+        touchedObject.direction = 2
     else
-        dir = 1
+        touchedObject.direction = 1
     end
         
 end

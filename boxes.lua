@@ -3,22 +3,22 @@ local map = require('map')
 local M = {}
 
 -- Creation of inactive boxes
-M.green_a = {object = display.newRect(-110, -160, 20, 20), destination = {"o", 1}, state = "OFF"}
-M.green_b = {object = display.newRect(-110, -160, 20, 20), destination = {"o", 1}, state = "OFF"}
-M.red_a = {object = display.newRect(-110, -160, 20, 20), destination = {"o", 1}, state = "OFF"}
-M.red_b = {object = display.newRect(-110, -160, 20, 20), destination = {"o", 1}, state = "OFF"}
-M.blue_a = {object = display.newRect(-110, -160, 20, 20), destination = {"o", 1}, state = "OFF"}
-M.blue_b = {object = display.newRect(-110, -160, 20, 20), destination = {"o", 1}, state = "OFF"}
-M.white_a = {object = display.newRect(-110, -160, 20, 20), destination = {"o", 1}, state = "OFF"}
-M.white_b = {object = display.newRect(-110, -160, 20, 20), destination = {"o", 1}, state = "OFF"}
-M.yellow_a = {object = display.newRect(-110, -160, 20, 20), destination = {"o", 1}, state = "OFF"}
-M.yellow_b = {object = display.newRect(-110, -160, 20, 20), destination = {"o", 1}, state = "OFF"}
-M.orange_a = {object = display.newRect(-110, -160, 20, 20), destination = {"o", 1}, state = "OFF"}
-M.orange_b = {object = display.newRect(-110, -160, 20, 20), destination = {"o", 1}, state = "OFF"}
-M.pink_a = {object = display.newRect(-110, -160, 20, 20), destination = {"o", 1}, state = "OFF"}
-M.pink_b = {object = display.newRect(-110, -160, 20, 20), destination = {"o", 1}, state = "OFF"}
-M.purple_a = {object = display.newRect(-110, -160, 20, 20), destination = {"o", 1}, state = "OFF"}
-M.purple_b = {object = display.newRect(-110, -160, 20, 20), destination = {"o", 1}, state = "OFF"}
+M.green_a = {object = display.newRect(-110, -160, 20, 20), destination = {"o", 1}, state = "OFF", colour = "green"}
+M.green_b = {object = display.newRect(-110, -160, 20, 20), destination = {"o", 1}, state = "OFF", colour = "green"}
+M.red_a = {object = display.newRect(-110, -160, 20, 20), destination = {"o", 1}, state = "OFF", colour = "red"}
+M.red_b = {object = display.newRect(-110, -160, 20, 20), destination = {"o", 1}, state = "OFF", colour = "red"}
+M.blue_a = {object = display.newRect(-110, -160, 20, 20), destination = {"o", 1}, state = "OFF", colour = "blue"}
+M.blue_b = {object = display.newRect(-110, -160, 20, 20), destination = {"o", 1}, state = "OFF", colour = "blue"}
+M.white_a = {object = display.newRect(-110, -160, 20, 20), destination = {"o", 1}, state = "OFF", colour = "white"}
+M.white_b = {object = display.newRect(-110, -160, 20, 20), destination = {"o", 1}, state = "OFF", colour = "white"}
+M.yellow_a = {object = display.newRect(-110, -160, 20, 20), destination = {"o", 1}, state = "OFF", colour = "yellow"}
+M.yellow_b = {object = display.newRect(-110, -160, 20, 20), destination = {"o", 1}, state = "OFF", colour = "yellow"}
+M.orange_a = {object = display.newRect(-110, -160, 20, 20), destination = {"o", 1}, state = "OFF", colour = "orange"}
+M.orange_b = {object = display.newRect(-110, -160, 20, 20), destination = {"o", 1}, state = "OFF", colour = "orange"}
+M.pink_a = {object = display.newRect(-110, -160, 20, 20), destination = {"o", 1}, state = "OFF", colour = "pink"}
+M.pink_b = {object = display.newRect(-110, -160, 20, 20), destination = {"o", 1}, state = "OFF", colour = "pink"}
+M.purple_a = {object = display.newRect(-110, -160, 20, 20), destination = {"o", 1}, state = "OFF", colour = "purple"}
+M.purple_b = {object = display.newRect(-110, -160, 20, 20), destination = {"o", 1}, state = "OFF", colour = "purple"}
 
 M.tmp = display.newRect(-110, -160, 20, 20)
 M.tmp.pure = 5

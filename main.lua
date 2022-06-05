@@ -5,8 +5,8 @@ local boxes = require('boxes')
 local map = require('map')
 
 -- Variables
-local _W, _H, _CX, _CY = relayout._W, relayout._H, relayout._CX, relayout._CY
-local start
+start = 0
+score = 0
 
 function moveBox( direction, box )
     
@@ -79,9 +79,13 @@ function setNextDestination( box, destination )
        box.destination[2] = 1
        box.state = "OFF"
 
-       --table.insert(boxes.all_boxes_off, box)
-       --table.remove(boxes.all_boxes_on, functions.indexOf(boxes.all_boxes_on, box))
-   end
+        if box.colour == destination.colour then
+            score = score + 1
+        else
+            score = score - 1
+        end
+        print(score)
+    end
 end
 
 function update()    
@@ -112,16 +116,23 @@ function update()
 end
 
 Runtime:addEventListener("enterFrame", update)
-
+counter = 0
 -- Touch 
 function touchListener( event )
-    
+    counter = counter +1
     if event.phase == "ended" then 
-        --functions.changeJunctionDirection( event.target )
+        functions.changeJunctionDirection( event.target, counter )
         print( "Object tapped: " .. tostring(event.target) )
     end
 end
 
-map.all_two_way_junctions:addEventListener("touch", touchListener)
+map.junction_tw_2.object:addEventListener("touch", touchListener)
+map.junction_tw_1.object:addEventListener("touch", touchListener)
+map.junction_tw_3.object:addEventListener("touch", touchListener)
+map.junction_tw_4.object:addEventListener("touch", touchListener)
+map.junction_tw_5.object:addEventListener("touch", touchListener)
+map.junction_tw_6.object:addEventListener("touch", touchListener)
+map.junction_tw_7.object:addEventListener("touch", touchListener)
+
 --function startGame()
     --spawnBoxes--]]
