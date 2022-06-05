@@ -20,7 +20,8 @@ M.pink_b = {object = display.newRect(-110, -160, 20, 20), destination = {"o", 1}
 M.purple_a = {object = display.newRect(-110, -160, 20, 20), destination = {"o", 1}, state = "OFF"}
 M.purple_b = {object = display.newRect(-110, -160, 20, 20), destination = {"o", 1}, state = "OFF"}
 
-
+M.tmp = display.newRect(-110, -160, 20, 20)
+M.tmp.pure = 5
 -- Table of all inactive boxes ready for deployment
 M.all_boxes = {M.green_a, M.green_b, M.red_a, M.red_b, M.blue_a, M.blue_b, M.white_a, M.white_b, M.yellow_a, M.yellow_b, 
                M.orange_a, M.orange_b, M.pink_a, M.pink_b, M.purple_a, M.purple_b}
@@ -57,7 +58,7 @@ end
 function M.checkMoveDirection( box )
 
     local dest = functions.decipherDestination(box.destination)
-    local destination_object = dest.object
+    local destination_coordinates = dest.coordinates
     local box_object = box.object
     
     -- Box's coordinates 
@@ -65,8 +66,8 @@ function M.checkMoveDirection( box )
     local box_y = box_object.y
 
     -- Next junction point coordinates
-    local junction_x = destination_object[1]
-    local junction_y = destination_object[2]
+    local junction_x = destination_coordinates[1]
+    local junction_y = destination_coordinates[2]
 
     -- Checking if a point has been reached
     if box_y == junction_y and box_x == junction_x then

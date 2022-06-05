@@ -1,12 +1,13 @@
 -- main.lua
 local relayout = require('relayout')
 local functions = require('functions')
-local boxes = require("boxes")
-local map = require("map")
+local boxes = require('boxes')
+local map = require('map')
 
 -- Variables
 local _W, _H, _CX, _CY = relayout._W, relayout._H, relayout._CX, relayout._CY
 local start
+
 function moveBox( direction, box )
     
     if direction == "down" then
@@ -40,7 +41,7 @@ timer.performWithDelay( 5000, listener )
 
 function setNextDestination( box, destination )
 
-    local destination_object = destination.object
+    local destination_coordinates = destination.coordinates
     local destination_type = destination.type
     local box_object = box.object
 
@@ -49,8 +50,8 @@ function setNextDestination( box, destination )
     local box_y = box_object.y
 
     -- Next junction point coordinates
-    local junction_x = destination_object[1]
-    local junction_y = destination_object[2]
+    local junction_x = destination_coordinates[1]
+    local junction_y = destination_coordinates[2]
 
     -- If it is one way then set destination to next
     if destination_type == "one-way" then
@@ -63,7 +64,7 @@ function setNextDestination( box, destination )
     -- If it is two then set destination based on user in put
     if destination_type == "two-way" then
         
-        local tmp = destination.next[destination.direction]
+        local tmp = destination.next[destination.object.direction]
         local index = tmp[1]
         local type = tmp[2]
         box.destination[1] = index
@@ -83,7 +84,7 @@ function setNextDestination( box, destination )
    end
 end
 
-local function update()    
+function update()    
 
     
     if start == 1 then
@@ -110,18 +111,17 @@ local function update()
     end
 end
 
--- INPUT
-
 Runtime:addEventListener("enterFrame", update)
 
 -- Touch 
---[[local function touchListener( event )
+function touchListener( event )
     
     if event.phase == "ended" then 
-        functions.changeJunctionDirection(event.target)
+        --functions.changeJunctionDirection( event.target )
+        print( "Object tapped: " .. tostring(event.target) )
     end
 end
 
-Runtime:addEventListener("touch", touchListener)
+map.all_two_way_junctions:addEventListener("touch", touchListener)
 --function startGame()
     --spawnBoxes--]]
