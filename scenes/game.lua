@@ -14,6 +14,7 @@ local grpMain
 -- Variables
 local gameState
 local score
+local displayScore
 local lives
 local startTime
 local counter
@@ -88,15 +89,30 @@ function setNextDestination( box, destination )
         else
             lives = lives - 1
         end
-        --print(score)
+    end
+end
+
+function inserter( grpMain )
+    
+    grpMain:insert(displayScore)
+
+    -- Insert all boxes from screen
+    for key, value in pairs(boxes.all_boxes) do
+
+        local object = boxes.all_boxes[key].object
+        grpMain:insert(object)
+    end
+
+    -- Remove all junction points from screen
+    for key, value in pairs(map.all_two_way_junctions) do
+
+        local object = map.all_two_way_junctions[key].object
+        grpMain:insert(object)
     end
 end
 
 function cleanUp() 
-
-    local gameResult = miscellaneous.checkIfHighscore( score )
-    miscellaneous.finalScore = gameResult
-    
+    print("");
     Runtime:removeEventListener("enterFrame", update)
     map.junction_tw_2.object:removeEventListener("touch", touchListener)
     map.junction_tw_1.object:removeEventListener("touch", touchListener)
@@ -105,7 +121,8 @@ function cleanUp()
     map.junction_tw_5.object:removeEventListener("touch", touchListener)
     map.junction_tw_6.object:removeEventListener("touch", touchListener)
     map.junction_tw_7.object:removeEventListener("touch", touchListener)
-
+    displayScore:removeSelf()
+    displayScore = nil
     -- Remove all boxes from screen
     for key, value in pairs(boxes.all_boxes) do
 
@@ -121,10 +138,6 @@ function cleanUp()
         object:removeSelf()
         object = nil
     end
-    -- Go to the End Screen
-
-
-    composer.gotoScene("scenes.gameover")
 end
 
 function update()    
@@ -136,6 +149,9 @@ function update()
                 table.insert(all_boxes_on, value)
             end
         end
+
+        -- Displaying the updated score each frame.
+        displayScore.text = tostring(score)
 
         local length = #all_boxes_on
         for i = 1, length do
@@ -154,8 +170,13 @@ function update()
             gameState = "over"
         end
 
-    elseif gameState == "over" then
-        cleanUp()
+        if gameState == "over" then
+            local name = composer.getSceneName("current")
+            local gameResult = miscellaneous.checkIfHighscore( score )
+            miscellaneous.finalScore = gameResult
+            --composer.removeScene(name) 
+            composer.gotoScene("scenes.gameover")
+        end
     end
 end
 
@@ -184,25 +205,29 @@ end
 function scene:create( event )
     print("scene:create - game")
 
-    -- Create main group and insert to scene
-    grpMain = display.newGroup()
-
-    self.view:insert(grpMain)
-    
-    -- Initializing variables
-    startTime = os.time()
     miscellaneous = require('miscellaneous')
     boxes = require('boxes')
     map = require('map')
+
+    displayScore = display.newText( "0", _CX, 80, "pressStart2P-Regular.ttf", 40)
+    -- Create main group and insert to scene
+    grpMain = display.newGroup()
+    self.view:insert(grpMain)
     
+    -- Initializing variables
+    timer.performWithDelay( 1000, listener )
+end
+
+-- show()
+function scene:show( event )
+  if ( event.phase == "will" ) then
+    inserter(grpMain)
     score = 0
     counter = 0
     lives = 5
     gameState = "playing"
-
+  elseif ( event.phase == "did" ) then
     Runtime:addEventListener("enterFrame", update)
-    timer.performWithDelay( 1000, listener )
-
     map.junction_tw_2.object:addEventListener("touch", touchListener)
     map.junction_tw_1.object:addEventListener("touch", touchListener)
     map.junction_tw_3.object:addEventListener("touch", touchListener)
@@ -210,12 +235,6 @@ function scene:create( event )
     map.junction_tw_5.object:addEventListener("touch", touchListener)
     map.junction_tw_6.object:addEventListener("touch", touchListener)
     map.junction_tw_7.object:addEventListener("touch", touchListener)
-end
-
--- show()
-function scene:show( event )
-  if ( event.phase == "will" ) then
-  elseif ( event.phase == "did" ) then
   end
 end
 
@@ -223,13 +242,23 @@ end
 function scene:hide( event )
   if ( event.phase == "will" ) then
   elseif ( event.phase == "did" ) then
+    Runtime:removeEventListener("enterFrame", update)
+    map.junction_tw_2.object:removeEventListener("touch", touchListener)
+    map.junction_tw_1.object:removeEventListener("touch", touchListener)
+    map.junction_tw_3.object:removeEventListener("touch", touchListener)
+    map.junction_tw_4.object:removeEventListener("touch", touchListener)
+    map.junction_tw_5.object:removeEventListener("touch", touchListener)
+    map.junction_tw_6.object:removeEventListener("touch", touchListener)
+    map.junction_tw_7.object:removeEventListener("touch", touchListener)
   end
 end
 
 -- destroy()
 function scene:destroy(event)
     if event.phase == "will" then
-        
+        cleanUp()
+        print("kakka")
+        composer.gotoScene("scenes.gameover")
     end
 end
 

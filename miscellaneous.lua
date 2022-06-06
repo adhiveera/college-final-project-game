@@ -12,31 +12,34 @@ end
 
 function MODULE.checkIfHighscore( score )
     local path = system.pathForFile( "score.txt", system.DocumentsDirectory )
- 
+    local highScore 
     -- Open the file handle
     local file, errorString = io.open( path, "r" )
  
     if not file then
         -- Error occurred; output the cause
-        file = io.open( path, "w" )
         file:write( score )
         io.close( file )
         file = nil
-    
-        return {isHighScore = false, newScore = score}
+        highScore = score
+        return { true, score, highScore}
     else
-        print(score)
         -- Read data from file
-        local contents = file:read( "*n" )
-        -- Output the file contents
-        if score > contents then
-            --file = io.open( path, 'w')
-            file:write(score)
-        end
-        io.close( file )
+        highScore = file:read( "*n" )
+        print(highScore)
+        io.close(file)
         file = nil
-    
-        return { isHighScore = true, newScore = score }
+
+        -- Output the file contents
+        if score > highScore then
+            file = io.open( path, "w" )
+            file:write(score)
+            io.close( file )
+            file = nil
+            return {true, score, highScore}
+        else
+            return { false, score , highScore }
+        end
     end
 end
 

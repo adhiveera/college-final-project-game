@@ -10,9 +10,18 @@ local scene = composer.newScene()
 -- Groups
 local grpMain
 
+-- Variables
+local btnPlay
 -- -----------------------------------------------------------------------------------
 -- Scene event functions
 -- -----------------------------------------------------------------------------------
+
+function next()
+    local name = composer.getSceneName("current")
+    print("destroyed")
+    composer.removeScene("scene.game")
+    composer.gotoScene("scenes.game", { effect = "slideLeft"})
+end
 
 -- create()
 function scene:create( event )
@@ -31,20 +40,16 @@ function scene:create( event )
     grpMain:insert(bg)
 
     --
-
-    local btnPlay = display.newText("Tap to start", _CX, _CY, "PressStart2P-Regular.ttf", 25)
+    btnPlay = display.newText("Tap to start", _CX, _CY, "PressStart2P-Regular.ttf", 25)
     grpMain:insert(btnPlay)
 
-    btnPlay:addEventListener("tap", 
-        function()
-        composer.gotoScene("scenes.game") 
-        end)
 end
 
 -- show()
 function scene:show( event )
   if ( event.phase == "will" ) then
   elseif ( event.phase == "did" ) then
+    btnPlay:addEventListener("tap", next)
   end
 end
 
@@ -52,13 +57,14 @@ end
 function scene:hide( event )
   if ( event.phase == "will" ) then
   elseif ( event.phase == "did" ) then
+    btnPlay:removeEventListener("tap", next)
   end
 end
 
 -- destroy()
 function scene:destroy(event)
-  if event.phase == "will" then
-  end
+    if event.phase == "will" then
+    end
 end
 
 -- -----------------------------------------------------------------------------------
