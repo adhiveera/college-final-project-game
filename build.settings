@@ -5,6 +5,12 @@
 
 settings =
 {
+	splashScreen = 
+	{
+		-- Remove the flash LaunchScreen
+		enable = false
+	},
+	
 	orientation =
 	{
 		-- Supported values for orientation:

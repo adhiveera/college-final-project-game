@@ -1,4 +1,4 @@
-local functions = require('functions')
+local miscellaneous = require('miscellaneous')
 local map = require('map')
 local M = {}
 
@@ -22,13 +22,9 @@ M.purple_b = {object = display.newRect(-110, -160, 20, 20), destination = {"o", 
 
 M.tmp = display.newRect(-110, -160, 20, 20)
 M.tmp.pure = 5
--- Table of all inactive boxes ready for deployment
 M.all_boxes = {M.green_a, M.green_b, M.red_a, M.red_b, M.blue_a, M.blue_b, M.white_a, M.white_b, M.yellow_a, M.yellow_b, 
                M.orange_a, M.orange_b, M.pink_a, M.pink_b, M.purple_a, M.purple_b}
 M.all_boxes_off = M.all_boxes
--- Variables assisting with random value generator
---M.prev_random = 0;
---M.random = 0
 
 -- Spawning boxes on the map and calling move function
 function M.spawnBoxes()
@@ -46,9 +42,6 @@ function M.spawnBoxes()
     object.x = 110
     object.y = 160
 
-    --table.insert(M.all_boxes_on, box)
-    --table.remove(M.all_boxes_off, functions.indexOf(M.all_boxes_off, box))
-
     if box.state == "OFF" then
         box.state = "ON"
     end
@@ -57,7 +50,7 @@ end
 -- Checking the direction of the box movement
 function M.checkMoveDirection( box )
 
-    local dest = functions.decipherDestination(box.destination)
+    local dest = miscellaneous.decipherDestination(box.destination)
     local destination_coordinates = dest.coordinates
     local box_object = box.object
     

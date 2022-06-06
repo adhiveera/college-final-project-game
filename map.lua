@@ -13,7 +13,6 @@ MODULE.DESTINATION_WHITE = { next = "over", coordinates = {270, 240}, type = "en
 MODULE.junction_tw_group = display.newGroup() 
 -- Two way junction points
 MODULE.junction_tw_1 = { next = {{"o", 5}, {"o", 3}}, direction = 2, coordinates = {190, 320}, type = "two-way", object = display.newRect(MODULE.junction_tw_group, 190, 320, 50, 50) }; MODULE.junction_tw_1.object.alpha = 1; MODULE.junction_tw_1.object.direction = 1;
-
 MODULE.junction_tw_3 = { next = {{"e", 3}, {"e", 4}}, direction = 2, coordinates = {110, 560}, type = "two-way", object = display.newRect(MODULE.junction_tw_group, 110, 560, 50, 50) }; MODULE.junction_tw_3.object.alpha = 1; MODULE.junction_tw_3.object.direction = 1;
 MODULE.junction_tw_4 = { next = {{"e", 2}, {"e", 1}}, direction = 1, coordinates = { 30, 320}, type = "two-way", object = display.newRect(MODULE.junction_tw_group,  30, 320, 50, 50) }; MODULE.junction_tw_4.object.alpha = 1; MODULE.junction_tw_4.object.direction = 1;
 MODULE.junction_tw_5 = { next = {{"o", 6}, {"o", 7}}, direction = 1, coordinates = {270, 400}, type = "two-way", object = display.newRect(MODULE.junction_tw_group, 270, 400, 50, 50) }; MODULE.junction_tw_5.object.alpha = 1; MODULE.junction_tw_5.object.direction = 1;

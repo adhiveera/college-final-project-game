@@ -1,6 +1,5 @@
 -- Random value generator 
 local map = require('map')
-
 local MODULE = {}
 
 function MODULE.properRandomValue( prev_random )
@@ -9,6 +8,36 @@ function MODULE.properRandomValue( prev_random )
         random = math.random( 16 )
     end
     return random
+end
+
+function MODULE.checkIfHighscore( score )
+    local path = system.pathForFile( "score.txt", system.DocumentsDirectory )
+ 
+    -- Open the file handle
+    local file, errorString = io.open( path, "r" )
+ 
+    if not file then
+        -- Error occurred; output the cause
+        file = io.open( path, "w" )
+        file:write( score )
+        io.close( file )
+        file = nil
+    
+        return {isHighScore = false, newScore = score}
+    else
+        print(score)
+        -- Read data from file
+        local contents = file:read( "*n" )
+        -- Output the file contents
+        if score > contents then
+            --file = io.open( path, 'w')
+            file:write(score)
+        end
+        io.close( file )
+        file = nil
+    
+        return { isHighScore = true, newScore = score }
+    end
 end
 
 function MODULE.decipherDestination( decipher )
@@ -43,7 +72,6 @@ end
 
 -- Junction pointer direction logic
 function MODULE.changeJunctionDirection( touchedObject )
-    print(counter)
     
     if touchedObject.direction == 1 then
         touchedObject.direction = 2
