@@ -27,6 +27,16 @@ function next()
     composer.gotoScene("scenes.game", { effect = "slideLeft"})
 end
 
+function onMouseEvent( event )
+  if event.type == "down" then
+      if event.isPrimaryButtonDown then
+          print( event.x .. "   " .. event.y )
+      elseif event.isSecondaryButtonDown then
+          print( "Right mouse button clicked." )        
+      end
+  end
+end
+
 function scene:create( event )
     print("scene:create - gameover")
 
@@ -36,7 +46,7 @@ function scene:create( event )
     self.view:insert(grpMain)
 
     -- Insert objects to grpMain here
-    local bg = display.newImageRect("background.png", _W, _H)
+    local bg = display.newImageRect("background1.png", _W, _H)
     bg.x = _CX
     bg.y = _CY
     grpMain:insert(bg)
@@ -59,6 +69,7 @@ function scene:show( event )
   elseif ( event.phase == "did" ) then
     
     btnPlayAgain:addEventListener("tap", next )
+    Runtime:addEventListener("enterFrame", update)
   end
 end
 
@@ -67,6 +78,7 @@ function scene:hide( event )
   if ( event.phase == "will" ) then
   elseif ( event.phase == "did" ) then
     btnPlayAgain:removeEventListener("tap", next)
+    Runtime:removeEventListener("enterFrame", update)
   end
 end
 

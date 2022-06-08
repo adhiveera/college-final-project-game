@@ -18,6 +18,7 @@ function MODULE.checkIfHighscore( score )
  
     if not file then
         -- Error occurred; output the cause
+        file = io.open(path, "w")
         file:write( score )
         io.close( file )
         file = nil
@@ -75,13 +76,26 @@ end
 
 -- Junction pointer direction logic
 function MODULE.changeJunctionDirection( touchedObject )
-    
+
+    --[[
+    if touchedObject.rotationDir[touchedObject.direction] == "down" then
+        touchedObject.rotation = 90
+    end
+    elseif touchedObject.rotationDir[touchedObject.direction] == "up" then
+        touchedObject.rotation = -90
+    elseif touchedObject.rotationDir[touchedObject.direction] == "left" then
+        touchedObject.rotation = 90
+    elseif touchedObject.rotationDir[touchedObject.direction] == "right" then
+--]]
+    local tmp = touchedObject.rotationDir
     if touchedObject.direction == 1 then
+
+        touchedObject.rotation = -tmp
         touchedObject.direction = 2
     else
+        touchedObject.rotation = touchedObject.rotation + tmp
         touchedObject.direction = 1
     end
-        
 end
 
 return MODULE

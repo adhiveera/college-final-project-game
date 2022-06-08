@@ -95,7 +95,6 @@ end
 function inserter( grpMain )
     
     grpMain:insert(displayScore)
-
     -- Insert all boxes from screen
     for key, value in pairs(boxes.all_boxes) do
 
@@ -197,6 +196,16 @@ function listener( event )
         timer.performWithDelay( 5000, listener )
     end
 end
+
+function onMouseEvent( event )
+    if event.type == "down" then
+        if event.isPrimaryButtonDown then
+            print( event.x .. "     ".. event.y )
+        elseif event.isSecondaryButtonDown then
+            print( "Right mouse button clicked." )        
+        end
+    end
+end
 -- -----------------------------------------------------------------------------------
 -- Scene event functions
 -- -----------------------------------------------------------------------------------
@@ -209,9 +218,14 @@ function scene:create( event )
     boxes = require('boxes')
     map = require('map')
 
+
     displayScore = display.newText( "0", _CX, 80, "pressStart2P-Regular.ttf", 40)
     -- Create main group and insert to scene
     grpMain = display.newGroup()
+    local bg = display.newImageRect("background1.png", _W, _H)
+    bg.x = _CX
+    bg.y = _CY
+    grpMain:insert(bg)
     self.view:insert(grpMain)
     
     -- Initializing variables
@@ -227,6 +241,7 @@ function scene:show( event )
     lives = 5
     gameState = "playing"
   elseif ( event.phase == "did" ) then
+    Runtime:addEventListener( "mouse", onMouseEvent )
     Runtime:addEventListener("enterFrame", update)
     map.junction_tw_2.object:addEventListener("touch", touchListener)
     map.junction_tw_1.object:addEventListener("touch", touchListener)
@@ -243,6 +258,7 @@ function scene:hide( event )
   if ( event.phase == "will" ) then
   elseif ( event.phase == "did" ) then
     Runtime:removeEventListener("enterFrame", update)
+    Runtime:removeEventListener( "mouse", onMouseEvent )
     map.junction_tw_2.object:removeEventListener("touch", touchListener)
     map.junction_tw_1.object:removeEventListener("touch", touchListener)
     map.junction_tw_3.object:removeEventListener("touch", touchListener)

@@ -39,8 +39,8 @@ function M.spawnBoxes()
 
     local box =  all_boxes_off[random_value]
     local object = box.object
-    object.x = 110
-    object.y = 160
+    object.x = 125
+    object.y = 220
 
     if box.state == "OFF" then
         box.state = "ON"
