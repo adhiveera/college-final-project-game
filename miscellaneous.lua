@@ -1,8 +1,46 @@
 -- Random value generator 
 local map = require('map')
-local MODULE = {}
+local M = {}
 
-function MODULE.properRandomValue( prev_random )
+M.green = {
+    type = "image",
+    filename = "green_bitmap.png"
+}
+M.blue = {
+    type = "image",
+    filename = "blue_bitmap.png"
+}
+M.yellow = {
+    type = "image",
+    filename = "yellow_bitmap.png"
+}
+M.red = {
+    type = "image",
+    filename = "red_bitmap.png"
+}
+M.pink = {
+    type = "image",
+    filename = "pink_bitmap.png"
+}
+M.orange = {
+    type = "image",
+    filename = "orange_bitmap.png"
+}
+M.purple = {
+    type = "image",
+    filename = "purple_bitmap.png"
+}
+M.brown = {
+    type = "image",
+    filename = "brown_bitmap.png"
+}
+M.spawn= {
+    type = "image",
+    filename = "spawn_bitmap.png"
+}
+
+
+function M.properRandomValue( prev_random )
     local random = math.random( 16 )
     if prev_random == random then
         random = math.random( 16 )
@@ -10,7 +48,7 @@ function MODULE.properRandomValue( prev_random )
     return random
 end
 
-function MODULE.checkIfHighscore( score )
+function M.checkIfHighscore( score )
     local path = system.pathForFile( "score.txt", system.DocumentsDirectory )
     local highScore 
     -- Open the file handle
@@ -44,7 +82,7 @@ function MODULE.checkIfHighscore( score )
     end
 end
 
-function MODULE.decipherDestination( decipher )
+function M.decipherDestination( decipher )
 
     local type = decipher[1]
     local index = decipher[2]
@@ -63,7 +101,7 @@ function MODULE.decipherDestination( decipher )
     end
 end
 
-function MODULE.indexOf( table, value )
+function M.indexOf( table, value )
 
     -- Returns the index of the value in a table
     for index, v in pairs(table) do
@@ -75,7 +113,7 @@ function MODULE.indexOf( table, value )
 end
 
 -- Junction pointer direction logic
-function MODULE.changeJunctionDirection( touchedObject )
+function M.changeJunctionDirection( touchedObject )
 
     --[[
     if touchedObject.rotationDir[touchedObject.direction] == "down" then
@@ -89,13 +127,39 @@ function MODULE.changeJunctionDirection( touchedObject )
 --]]
     local tmp = touchedObject.rotationDir
     if touchedObject.direction == 1 then
+        if tmp == "rightDown" then
+            touchedObject.rotation = 90
+            touchedObject.direction = 2
 
-        touchedObject.rotation = -tmp
-        touchedObject.direction = 2
+        elseif tmp == "leftDown" then
+            touchedObject.rotation = -90
+            touchedObject.direction = 2
+
+        elseif tmp == "leftUp" then
+            touchedObject.rotation = 90
+            touchedObject.direction = 2
+        elseif tmp == "rightUp" then
+            touchedObject.rotation = 0
+            touchedObject.direction = 2
+        end
     else
-        touchedObject.rotation = touchedObject.rotation + tmp
-        touchedObject.direction = 1
+        if tmp == "rightDown" then
+            touchedObject.rotation = 0
+            touchedObject.direction = 1
+
+        elseif tmp == "leftDown" then
+            touchedObject.rotation = 0
+            touchedObject.direction = 1
+        
+        elseif tmp == "leftUp" then
+            touchedObject.rotation = 0
+            touchedObject.direction = 1
+
+        elseif tmp == "rightUp" then
+            touchedObject.rotation = -90
+            touchedObject.direction = 1
+        end
     end
 end
 
-return MODULE
+return M

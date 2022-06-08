@@ -34,13 +34,14 @@ function scene:create( event )
 
     -- Insert objects to grpMain here
 
-    local bg = display.newImageRect("background.png", _W, _H)
+    local bg = display.newImageRect("menu.png", _W, _H)
     bg.x = _CX
     bg.y = _CY
     grpMain:insert(bg)
 
     --
-    btnPlay = display.newText("Tap to start", _CX, _CY, "PressStart2P-Regular.ttf", 25)
+    btnPlay = display.newText("Play", _CX, _CY, "Nexa Bold.otf", 50)
+    btnPlay:setTextColor( 0,0,0)
     grpMain:insert(btnPlay)
 
 end

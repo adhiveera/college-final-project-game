@@ -14,29 +14,34 @@ local grpMain
 -- Variables
 local gameState
 local score
+local spawnPt
 local displayScore
-local lives
+local lives = 5
 local startTime
 local counter
+local orange, green
+local pink, yellow
+local red, brown
+local blue, purple
 
 -- Functions
 
 function moveBox( direction, box )
     
     if direction == "down" then
-        box.y = box.y + 1
+        box.y = box.y + 0.5
     end
 
     if direction == "up" then
-        box.y = box.y - 1
+        box.y = box.y - 0.5
     end
 
     if direction == "right" then
-        box.x = box.x + 1
+        box.x = box.x + 0.5
     end
 
     if direction == "left" then
-        box.x = box.x - 1
+        box.x = box.x - 0.5
     end
 
     if direction == "none" then
@@ -95,17 +100,47 @@ end
 function inserter( grpMain )
     
     grpMain:insert(displayScore)
-    -- Insert all boxes from screen
-    for key, value in pairs(boxes.all_boxes) do
-
-        local object = boxes.all_boxes[key].object
-        grpMain:insert(object)
-    end
-
+    
     -- Remove all junction points from screen
     for key, value in pairs(map.all_two_way_junctions) do
 
         local object = map.all_two_way_junctions[key].object
+        grpMain:insert(object)
+    end
+    
+    green = display.newRect(137, 363,28,28)
+    green.fill = miscellaneous.green
+    grpMain:insert(green)
+    blue = display.newRect(292, 607,28,28)
+    blue.fill = miscellaneous.blue
+    grpMain:insert(blue)
+    yellow = display.newRect(228, 306,28,28)
+    yellow.fill = miscellaneous.yellow
+    grpMain:insert(yellow)
+    red = display.newRect(59,536,28,28)
+    red.fill = miscellaneous.red
+    grpMain:insert(red)
+    brown = display.newRect(125,607,28,28)
+    brown.fill = miscellaneous.brown
+    grpMain:insert(brown)
+    orange = display.newRect(69,292,28,28)
+    orange.fill = miscellaneous.orange
+    grpMain:insert(orange)
+    purple = display.newRect(228,536,28,28)
+    purple.fill = miscellaneous.purple
+    grpMain:insert(purple)
+    pink = display.newRect(292,237,28,28)
+    pink.fill = miscellaneous.pink
+    grpMain:insert(pink)
+    spawnPt = display.newRect(125,221,28,28)
+    spawnPt.fill = miscellaneous.spawn
+    grpMain:insert(spawnPt)
+
+    spawnPt.alpha = 0; green.alpha = 0; blue.alpha =0; yellow.alpha = 0; red.alpha =0; brown.alpha=0; orange.alpha=0; purple.alpha=0; pink.alpha=0;
+    -- Insert all boxes from screen
+    for key, value in pairs(boxes.all_boxes) do
+
+        local object = boxes.all_boxes[key].object
         grpMain:insert(object)
     end
 end
@@ -120,6 +155,23 @@ function cleanUp()
     map.junction_tw_5.object:removeEventListener("touch", touchListener)
     map.junction_tw_6.object:removeEventListener("touch", touchListener)
     map.junction_tw_7.object:removeEventListener("touch", touchListener)
+    green:removeSelf()
+    green = nil
+    yellow:removeSelf()
+    yellow = nil
+    orange:removeSelf()
+    orange = nil
+    pink:removeSelf()
+    pink = nil
+    blue:removeSelf()
+    blue = nil
+    purple:removeSelf()
+    purple = nil
+    red:removeSelf()
+    red = nil
+    brown:removeSelf()
+    brown = nil
+
     displayScore:removeSelf()
     displayScore = nil
     -- Remove all boxes from screen
@@ -150,7 +202,7 @@ function update()
         end
 
         -- Displaying the updated score each frame.
-        displayScore.text = tostring(score)
+        displayScore.text = tostring(lives)
 
         local length = #all_boxes_on
         for i = 1, length do
@@ -165,7 +217,7 @@ function update()
                 moveBox(direction, box.object )
             end    
         end
-        if lives == 4 then 
+        if lives == 0 then 
             gameState = "over"
         end
 
@@ -193,7 +245,7 @@ function listener( event )
         boxes.spawnBoxes()
         lastTime = system.getTimer() 
         timer.cancelAll()
-        timer.performWithDelay( 5000, listener )
+        timer.performWithDelay( 3500, listener )
     end
 end
 
@@ -215,17 +267,19 @@ function scene:create( event )
     print("scene:create - game")
 
     miscellaneous = require('miscellaneous')
-    boxes = require('boxes')
     map = require('map')
+    boxes = require('boxes')
 
-
-    displayScore = display.newText( "0", _CX, 80, "pressStart2P-Regular.ttf", 40)
+    displayScore = display.newText( "0", _CX, 80, "Nexa Bold.otf", 60)
+    displayScore:setTextColor( 0,0,0)
+    
     -- Create main group and insert to scene
     grpMain = display.newGroup()
     local bg = display.newImageRect("background1.png", _W, _H)
     bg.x = _CX
     bg.y = _CY
     grpMain:insert(bg)
+    grpMain:insert(map.junction_tw_group)
     self.view:insert(grpMain)
     
     -- Initializing variables
@@ -235,6 +289,7 @@ end
 -- show()
 function scene:show( event )
   if ( event.phase == "will" ) then
+    
     inserter(grpMain)
     score = 0
     counter = 0
@@ -250,6 +305,7 @@ function scene:show( event )
     map.junction_tw_5.object:addEventListener("touch", touchListener)
     map.junction_tw_6.object:addEventListener("touch", touchListener)
     map.junction_tw_7.object:addEventListener("touch", touchListener)
+    spawnPt.alpha = 1; green.alpha = 1; blue.alpha =1; yellow.alpha = 1; red.alpha =1; brown.alpha=1; orange.alpha=1; purple.alpha=1; pink.alpha=1;
   end
 end
 

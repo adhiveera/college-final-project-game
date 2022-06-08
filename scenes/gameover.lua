@@ -46,17 +46,20 @@ function scene:create( event )
     self.view:insert(grpMain)
 
     -- Insert objects to grpMain here
-    local bg = display.newImageRect("background1.png", _W, _H)
+    local bg = display.newImageRect("background.png", _W, _H)
     bg.x = _CX
     bg.y = _CY
     grpMain:insert(bg)
     local tmp = miscellaneous.finalScore
     score = tmp[2] 
 
-    local lblScore = display.newText("Score: " .. tostring(score), _CX, _CY - 80, "PressStart2P-Regular.ttf", 20)
-    local lblHighScore = display.newText("Highscore: " .. tostring(tmp[3]), _CX, _CY - 30  , "PressStart2P-Regular.ttf", 16)
+    local lblScore = display.newText("Score: " .. tostring(score), _CX, _CY - 80, "Nexa Bold.otf", 40)
+    --lblScore:setTextColor( 0,0,0)
+    local lblHighScore = display.newText("Highscore: " .. tostring(tmp[3]), _CX, _CY - 30  , "Nexa Regular.otf", 22)
+    --blHighScore:setTextColor( 0,0,0)
 
-    btnPlayAgain = display.newText("Play Again", _CX, _CY + 50, "PressStart2P-Regular.ttf", 25)
+    btnPlayAgain = display.newText("Play Again", _CX, _CY + 90, "Nexa Bold.otf", 40)
+    --btnPlayAgain:setTextColor( 0,0,0)
     grpMain:insert(lblScore)
     grpMain:insert(lblHighScore)
     grpMain:insert(btnPlayAgain)

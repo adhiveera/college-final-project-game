@@ -3,26 +3,16 @@ local map = require('map')
 local M = {}
 
 -- Creation of inactive boxes
-M.green_a = {object = display.newRect(-110, -160, 20, 20), destination = {"o", 1}, state = "OFF", colour = "green"}
-M.green_b = {object = display.newRect(-110, -160, 20, 20), destination = {"o", 1}, state = "OFF", colour = "green"}
-M.red_a = {object = display.newRect(-110, -160, 20, 20), destination = {"o", 1}, state = "OFF", colour = "red"}
-M.red_b = {object = display.newRect(-110, -160, 20, 20), destination = {"o", 1}, state = "OFF", colour = "red"}
-M.blue_a = {object = display.newRect(-110, -160, 20, 20), destination = {"o", 1}, state = "OFF", colour = "blue"}
-M.blue_b = {object = display.newRect(-110, -160, 20, 20), destination = {"o", 1}, state = "OFF", colour = "blue"}
-M.white_a = {object = display.newRect(-110, -160, 20, 20), destination = {"o", 1}, state = "OFF", colour = "white"}
-M.white_b = {object = display.newRect(-110, -160, 20, 20), destination = {"o", 1}, state = "OFF", colour = "white"}
-M.yellow_a = {object = display.newRect(-110, -160, 20, 20), destination = {"o", 1}, state = "OFF", colour = "yellow"}
-M.yellow_b = {object = display.newRect(-110, -160, 20, 20), destination = {"o", 1}, state = "OFF", colour = "yellow"}
-M.orange_a = {object = display.newRect(-110, -160, 20, 20), destination = {"o", 1}, state = "OFF", colour = "orange"}
-M.orange_b = {object = display.newRect(-110, -160, 20, 20), destination = {"o", 1}, state = "OFF", colour = "orange"}
-M.pink_a = {object = display.newRect(-110, -160, 20, 20), destination = {"o", 1}, state = "OFF", colour = "pink"}
-M.pink_b = {object = display.newRect(-110, -160, 20, 20), destination = {"o", 1}, state = "OFF", colour = "pink"}
-M.purple_a = {object = display.newRect(-110, -160, 20, 20), destination = {"o", 1}, state = "OFF", colour = "purple"}
-M.purple_b = {object = display.newRect(-110, -160, 20, 20), destination = {"o", 1}, state = "OFF", colour = "purple"}
+M.green_a = {object = display.newCircle(-110, -160, 12), destination = {"o", 1}, state = "OFF", colour = "green"}; M.green_a.object.fill = miscellaneous.green
+M.red_a = {object = display.newCircle(-110, -160, 12), destination = {"o", 1}, state = "OFF", colour = "red"}; M.red_a.object.fill = miscellaneous.red
+M.blue_a = {object = display.newCircle(-110, -160, 12), destination = {"o", 1}, state = "OFF", colour = "blue"}; M.blue_a.object.fill = miscellaneous.blue
+M.brown_a = {object = display.newCircle(-110, -160, 12), destination = {"o", 1}, state = "OFF", colour = "brown"}; M.brown_a.object.fill = miscellaneous.brown
+M.yellow_a = {object = display.newCircle(-110, -160, 12), destination = {"o", 1}, state = "OFF", colour = "yellow"}; M.yellow_a.object.fill = miscellaneous.yellow
+M.orange_a = {object = display.newCircle(-110, -160, 12), destination = {"o", 1}, state = "OFF", colour = "orange"}; M.orange_a.object.fill = miscellaneous.orange
+M.pink_a = {object = display.newCircle(-110, -160, 12), destination = {"o", 1}, state = "OFF", colour = "pink"}; M.pink_a.object.fill = miscellaneous.pink
+M.purple_a = {object = display.newCircle(-110, -160, 12), destination = {"o", 1}, state = "OFF", colour = "purple"}; M.purple_a.object.fill = miscellaneous.purple
 
-M.tmp = display.newRect(-110, -160, 20, 20)
-M.tmp.pure = 5
-M.all_boxes = {M.green_a, M.green_b, M.red_a, M.red_b, M.blue_a, M.blue_b, M.white_a, M.white_b, M.yellow_a, M.yellow_b, 
+M.all_boxes = {M.green_a, M.green_b, M.red_a, M.red_b, M.blue_a, M.blue_b, M.brown_a, M.brown_b, M.yellow_a, M.yellow_b, 
                M.orange_a, M.orange_b, M.pink_a, M.pink_b, M.purple_a, M.purple_b}
 M.all_boxes_off = M.all_boxes
 
@@ -62,25 +52,26 @@ function M.checkMoveDirection( box )
     local junction_x = destination_coordinates[1]
     local junction_y = destination_coordinates[2]
 
-    -- Checking if a point has been reached
-    if box_y == junction_y and box_x == junction_x then
-        return "none"
-    end
+    
 
     -- Checking which direction to move the box horzontally.
     if box_y == junction_y then 
         if junction_x > box_x then
             return "right"
-        else 
+        elseif junction_x < box_x then
             return "left"
+        elseif junction_x == box_x then
+            return "none"
         end
     end
     -- Checking which direction to move the box vertically.
     if box_x == junction_x then 
         if junction_y > box_y then
             return "down"
-        else 
+        elseif junction_y < box_y then
             return "up"
+        elseif junction_y == box_y then
+            return "none"
         end
     end
 end
